@@ -105,7 +105,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form role="form" name="myform" onsubmit="confirmSubmit('Do you want to Continue with Service Creation?','http://localhost:8090/api/services/ui')">
+                                        <form role="form" name="myform" onsubmit="confirmSubmit('Do you want to Continue with Service Creation?','http://localhost:8090/api/services/ui/create')">
                                             <div class="form-group">
                                                 <label>Service Name</label>
                                                 <input class="form-control" name="name">
@@ -122,7 +122,7 @@
                                                 <p class="help-block">Select the Compute Shape for your Service. Visit our wiki for <a target="_blank" href="">More Details</a>.
                                                     Based on your selection it decides the Topology for your Kafka Cluster.</p>
                                             </div>
-                                            <button type="submit" class="btn btn-success">Create Serivce</button>
+                                            <button type="submit" class="btn btn-success">Create Service</button>
                                             <% if (formsMessage) {
                                                 if(formsMessage.indexOf("Service Creation Started.") > -1) {
                                                 %>

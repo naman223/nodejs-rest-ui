@@ -30,4 +30,4 @@ curl -X PUT http://localhost:8090/api/services/TestNaman -H "Content-Type: appli
 curl -X DELETE http://localhost:8090/api/services/TestNaman
 
 ## Authors
-* **Naman Mehta (naman.mehta@oracle.com)**
+* **Naman Mehta (naman.mehta@gmail.com)**

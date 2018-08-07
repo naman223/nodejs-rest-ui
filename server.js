@@ -16,11 +16,38 @@ app.get('/', function (request, response) {
 });
 
 /*
+It's landing page for Create Service.
+ */
+app.get('/create', function (request, response) {
+    data.formsMessage = "";
+    response.render("create", {formsMessage: data.formsMessage});
+});
+
+/*
 It's page after Service Creation is Successful.
  */
 app.get('/created', function (request, response) {
     data.formsMessage = "Service Creation Started. Please Monitor Dashboard to verify the Status of Service Creation."
-    response.render("forms", {formsMessage: data.formsMessage});
+    response.render("create", {formsMessage: data.formsMessage});
+});
+
+
+/*
+It's landing page for Create Service.
+ */
+app.get('/edit', function (request, response) {
+    data.formsMessage = "";
+    var serviceName = request.query.selectRadio;
+    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
+});
+
+/*
+It's page after Service Creation is Successful.
+ */
+app.get('/edited', function (request, response) {
+    var serviceName = request.query.selectRadio;
+    data.formsMessage = "Service Edited. Please Monitor Dashboard to verify the Status of Service."
+    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
 });
 
 /*
@@ -28,15 +55,7 @@ It's page for error handling during Service Creation.
  */
 app.get('/error', function (request, response) {
     data.formsMessage = "Service with Same name already exists. Please try with different name."
-    response.render("forms", {formsMessage: data.formsMessage});
-});
-
-/*
-It's landing page for Create Service.
- */
-app.get('/create', function (request, response) {
-    data.formsMessage = "";
-    response.render("forms", {formsMessage: data.formsMessage});
+    response.render("create", {formsMessage: data.formsMessage});
 });
 
 /*
@@ -120,7 +139,7 @@ app.delete('/api/services/:name', function (request, response) {
 /*
 It's landing page for Submit from UI
  */
-app.post('/api/services/ui', function (request, response) {
+app.post('/api/services/ui/create', function (request, response) {
     var service = request.body;
     service.status = "In-Progress";
     for (var index = 0; index < data.services.length; index++) {
@@ -132,6 +151,41 @@ app.post('/api/services/ui', function (request, response) {
     data.services.push(service);
     response.redirect("/created");
 });
+
+/*
+It's landing page for Delete from UI
+ */
+app.post('/api/services/ui/delete/:name', function (request, response) {
+    var service;
+    var found = 0;
+    for (var index = 0; index < data.services.length; index++) {
+        if (data.services[index].name === request.params.name) {
+            found = 1;
+            service = data.services[index];
+        }
+    }
+    data.services.pop(service);
+    response.redirect("/");
+});
+
+/*
+It's landing page for Submit from UI
+ */
+app.post('/api/services/ui/edit', function (request, response) {
+    var currentService;
+    var service = request.body;
+    for (var index = 0; index < data.services.length; index++) {
+        if (data.services[index].name === service.name) {
+            currentService = data.services[index];
+        }
+    }
+    data.services.pop(currentService);
+    service.status = "In-Progress";
+    data.services.push(service);
+    response.redirect("/edited?selectRadio="+service.name);
+});
+
+
 
 /*
 Starting HTTP Server.

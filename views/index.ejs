@@ -29,13 +29,28 @@
         <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
     <script>
-        function confirmSubmit(val) {
+        function confirmSubmit(val,url) {
             var selection = document.myform.selectRadio.value;
             if (selection == "") {
                 alert("Please select one of the Service to " +val+".")
             } else {
-                var msg = "Do you want to " + val + " Service " + selection + "?"
-                alert(msg);
+                if (val  == "Delete") {
+                    var msg = "Do you want to " + val + " Service " + selection + "?"
+                    var agree = confirm(msg);
+                    if (agree) {
+                        document.myform.method = "POST";
+                        document.myform.action = url + selection;
+                        document.myform.submit();
+                    }
+                }
+                if(val == "Edit") {
+                    var msg = "Do you want to " + val + " Service " + selection + "?"
+                    var agree = confirm(msg);
+                    if (agree) {
+                        document.myform.action = url;
+                        document.myform.submit();
+                    }
+                }
             }
         }
     </script>
@@ -166,8 +181,8 @@
                                             }%>
                                         </tbody>
                                     </table>
-                                    <button type="submit" class="btn btn-warning" value="Edit" onClick="confirmSubmit(this.value)">Edit Serivce</button>
-                                    <button type="submit" class="btn btn-danger" value="Delete" onClick="confirmSubmit(this.value)">Delete Serivce</button>
+                                    <button type="submit" class="btn btn-warning" value="Edit" onClick="confirmSubmit(this.value,'http://localhost:8090/edit')">Edit Serivce</button>
+                                    <button type="submit" class="btn btn-danger" value="Delete" onClick="confirmSubmit(this.value,'http://localhost:8090/api/services/ui/delete/')">Delete Serivce</button>
                                 </div>
                                 <!-- /.table-responsive -->
                             </div>
