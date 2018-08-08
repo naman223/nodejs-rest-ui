@@ -30,7 +30,7 @@
     </head>
     <script>
         function confirmSubmit(val,url) {
-            var selection = document.myform.selectRadio.value;
+            var selection = document.myform.selectedService.value;
             if (selection == "") {
                 alert("Please select one of the Service to " +val+".")
             } else {
@@ -39,7 +39,7 @@
                     var agree = confirm(msg);
                     if (agree) {
                         document.myform.method = "POST";
-                        document.myform.action = url + selection;
+                        document.myform.action = url;
                         document.myform.submit();
                     }
                 }
@@ -47,6 +47,7 @@
                     var msg = "Do you want to " + val + " Service " + selection + "?"
                     var agree = confirm(msg);
                     if (agree) {
+                        document.myform.method = "POST";
                         document.myform.action = url;
                         document.myform.submit();
                     }
@@ -163,7 +164,7 @@
                                                 { %>
                                                 <tr class="info">
                                                     <td width="10" align="center">
-                                                       <input type="radio" name="selectRadio" value="<%= services[i].name %>">
+                                                       <input type="radio" name="selectedService" value="<%= services[i].name %>">
                                                     </td>
                                                     <td><%= i+1 %></td>
                                                     <td><%= services[i].name %></td>
@@ -181,8 +182,10 @@
                                             }%>
                                         </tbody>
                                     </table>
+                                    <% if (services.length!=0) { %>
                                     <button type="submit" class="btn btn-warning" value="Edit" onClick="confirmSubmit(this.value,'http://localhost:8090/edit')">Edit Serivce</button>
                                     <button type="submit" class="btn btn-danger" value="Delete" onClick="confirmSubmit(this.value,'http://localhost:8090/api/services/ui/delete/')">Delete Serivce</button>
+                                    <% } %>
                                 </div>
                                 <!-- /.table-responsive -->
                             </div>

@@ -35,9 +35,9 @@ app.get('/created', function (request, response) {
 /*
 It's landing page for Create Service.
  */
-app.get('/edit', function (request, response) {
+app.post('/edit', function (request, response) {
     data.formsMessage = "";
-    var serviceName = request.query.selectRadio;
+    var serviceName = request.body.selectedService;
     response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
 });
 
@@ -45,7 +45,7 @@ app.get('/edit', function (request, response) {
 It's page after Service Creation is Successful.
  */
 app.get('/edited', function (request, response) {
-    var serviceName = request.query.selectRadio;
+    var serviceName = request.query.name;
     data.formsMessage = "Service Edited. Please Monitor Dashboard to verify the Status of Service."
     response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
 });
@@ -155,11 +155,12 @@ app.post('/api/services/ui/create', function (request, response) {
 /*
 It's landing page for Delete from UI
  */
-app.post('/api/services/ui/delete/:name', function (request, response) {
+app.post('/api/services/ui/delete', function (request, response) {
+    var serviceName = request.body.selectedService;
     var service;
     var found = 0;
     for (var index = 0; index < data.services.length; index++) {
-        if (data.services[index].name === request.params.name) {
+        if (data.services[index].name === serviceName) {
             found = 1;
             service = data.services[index];
         }
@@ -175,14 +176,14 @@ app.post('/api/services/ui/edit', function (request, response) {
     var currentService;
     var service = request.body;
     for (var index = 0; index < data.services.length; index++) {
-        if (data.services[index].name === service.name) {
+        if (data.services[index].name == service.selectedService) {
             currentService = data.services[index];
         }
     }
     data.services.pop(currentService);
     service.status = "In-Progress";
     data.services.push(service);
-    response.redirect("/edited?selectRadio="+service.name);
+    response.redirect("/edited?name="+service.name);
 });
 
 
