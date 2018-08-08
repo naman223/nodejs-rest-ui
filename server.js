@@ -99,7 +99,7 @@ REST - Update Service. You should allow to change only the Shape for your Servic
 app.put('/api/services/:name', function (request, response) {
     var service = request.body;
     for (var index = 0; index < data.services.length; index++) {
-        if (data.services[index].name === request.params.name) {
+        if (data.services[index].name == request.params.name) {
             if(!service.shape) {
                 data.services[index].endpoint = service.endpoint;
                 data.services[index].status = service.status;
@@ -123,14 +123,15 @@ app.delete('/api/services/:name', function (request, response) {
     var found = 0;
     for (var index = 0; index < data.services.length; index++) {
         if (data.services[index].name === request.params.name) {
-            found = 1;
+            found = index;
             service = data.services[index];
+            break;
         }
     }
-    if (found == 0) {
+    if (!service) {
         response.status(404).send({error: 'Service not found'});
     } else {
-        data.services.pop(service);
+        data.services.splice(found,1);
         response.send(data.services);
         return;
     }
@@ -157,15 +158,14 @@ It's landing page for Delete from UI
  */
 app.post('/api/services/ui/delete', function (request, response) {
     var serviceName = request.body.selectedService;
-    var service;
-    var found = 0;
+    var found = 0
     for (var index = 0; index < data.services.length; index++) {
         if (data.services[index].name === serviceName) {
-            found = 1;
-            service = data.services[index];
+            found = index;
+            break;
         }
     }
-    data.services.pop(service);
+    data.services.splice(found,1);
     response.redirect("/");
 });
 
@@ -173,14 +173,15 @@ app.post('/api/services/ui/delete', function (request, response) {
 It's landing page for Submit from UI
  */
 app.post('/api/services/ui/edit', function (request, response) {
-    var currentService;
+    var found = 0;
     var service = request.body;
     for (var index = 0; index < data.services.length; index++) {
-        if (data.services[index].name == service.selectedService) {
-            currentService = data.services[index];
+        if (data.services[index].name == service.name) {
+            found = index;
+            break;
         }
     }
-    data.services.pop(currentService);
+    data.services.splice(found,1);
     service.status = "In-Progress";
     data.services.push(service);
     response.redirect("/edited?name="+service.name);
