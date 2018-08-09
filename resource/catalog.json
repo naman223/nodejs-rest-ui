@@ -94,7 +94,7 @@
       "description": "A 1 broker kafka service with topic limit 3",
       "free": false,
       "metadata": {
-        "max_storage_tb": 5,
+        "max_storage_tb": 2,
         "costs":[
           {
             "amount":{
@@ -111,8 +111,8 @@
         ],
         "bullets": [
           "Dedicated kafka brokers",
-          "5 GB storage",
-          "40 concurrent connections"
+          "3 GB storage",
+          "20 concurrent connections"
         ]
       },
       "schemas": {

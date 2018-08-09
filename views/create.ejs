@@ -124,7 +124,10 @@
                                         <% for (var planIndex = 0; planIndex < catalogServices[index].plans.length; planIndex++) { %>
                                             <tr>
                                                 <td><b>Plan <%=planIndex+1%></b></td>
-                                                <td><%=catalogServices[index].plans[planIndex].description%></td>
+                                                <td><%=catalogServices[index].plans[planIndex].description%><Br>
+                                                    Max Storage <%=catalogServices[index].plans[planIndex].metadata.max_storage_tb%> TB<br>
+                                                    <%=catalogServices[index].plans[planIndex].metadata.bullets%>
+                                                </td>
                                             </tr>
                                         <% } %>
                                     </table>
