@@ -108,14 +108,15 @@
                                         <p class="help-block">Editing this Service will delete your data and re-create the new Setup for you.</p>
                                     </div>
                                     <div class="form-group">
-                                        <label>Compute Shape</label>
+                                        <label>Select the Plan</label>
                                         <select class="form-control" name="shape">
-                                            <option>High Throughput</option>
-                                            <option>Low Latency</option>
-                                            <option>High Durability</option>
-                                            <option>High Availability</option>
+                                            <% for (var index = 0; index < catalogServices.length; index++) {
+                                            for (var planIndex = 0; planIndex < catalogServices[index].plans.length; planIndex++) { %>
+                                            <option value="<%=catalogServices[index].plans[planIndex].id%>"><%=catalogServices[index].plans[planIndex].description%></option>
+                                            <% }
+                                            }%>
                                         </select>
-                                        <p class="help-block">Select the Compute Shape for your Service. Visit our wiki for <a target="_blank" href="">More Details</a>.
+                                        <p class="help-block">Select the Plan for your Service. Visit our wiki for <a target="_blank" href="">More Details</a>.
                                             Based on your selection it decides the Topology for your Kafka Cluster.</p>
                                     </div>
                                     <button type="submit" class="btn btn-success">Edit Service</button>

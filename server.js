@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 It's landing page for UI.
  */
 app.get('/', function (request, response) {
-    response.render("index", {services: data.services});
+    response.render("index", {services: data.services, catalogServices: data.catalogServices});
 });
 
 /*
@@ -20,7 +20,7 @@ It's landing page for Create Service.
  */
 app.get('/create', function (request, response) {
     data.formsMessage = "";
-    response.render("create", {formsMessage: data.formsMessage});
+    response.render("create", {formsMessage: data.formsMessage, catalogServices: data.catalogServices});
 });
 
 /*
@@ -28,7 +28,7 @@ It's page after Service Creation is Successful.
  */
 app.get('/created', function (request, response) {
     data.formsMessage = "Service Creation Started. Please Monitor Dashboard to verify the Status of Service Creation."
-    response.render("create", {formsMessage: data.formsMessage});
+    response.render("create", {formsMessage: data.formsMessage, catalogServices: data.catalogServices});
 });
 
 
@@ -38,7 +38,7 @@ It's landing page for Create Service.
 app.post('/edit', function (request, response) {
     data.formsMessage = "";
     var serviceName = request.body.selectedService;
-    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
+    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage, catalogServices: data.catalogServices});
 });
 
 /*
@@ -47,7 +47,7 @@ It's page after Service Creation is Successful.
 app.get('/edited', function (request, response) {
     var serviceName = request.query.name;
     data.formsMessage = "Service Edited. Please Monitor Dashboard to verify the Status of Service."
-    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage});
+    response.render("edit", {serviceName: serviceName, formsMessage: data.formsMessage, catalogServices: data.catalogServices});
 });
 
 /*
@@ -194,4 +194,6 @@ Starting HTTP Server.
  */
 app.listen(8090, function () {
     console.log("Listening on port 8090.");
+    var catalog = require('./resource/catalog.json');
+    data.catalogServices = catalog.services;
 });

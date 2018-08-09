@@ -146,7 +146,7 @@
                                                 <th>Select</th>
                                                 <th>#</th>
                                                 <th>Service Name</th>
-                                                <th>Compute Shape</th>
+                                                <th>Plan</th>
                                                 <th>Status</th>
                                                 <th>End Point</th>
                                             </tr>
@@ -168,14 +168,20 @@
                                                     </td>
                                                     <td><%= i+1 %></td>
                                                     <td><%= services[i].name %></td>
-                                                    <td><%= services[i].shape %></td>
-                                                     <% if (services[i].status=="In-Progress") { %>
-                                                        <td><img src="images/inprogress.png" height="30">&nbsp;&nbsp;In-Progress</td>
-                                                     <% } else if (services[i].status=="Running") { %>
-                                                        <td><img src="images/done.png" height="30">&nbsp;&nbsp;Running</td>
-                                                     <% } else { %>
-                                                        <td align="centre"><img src="images/erro.png" height="30">&nbsp;&nbsp;Error</td>
-                                                      <% } %>
+                                                    <% for (var index = 0; index < catalogServices.length; index++) {
+                                                        for (var planIndex = 0; planIndex < catalogServices[index].plans.length; planIndex++) {
+                                                            if(catalogServices[index].plans[planIndex].id == services[i].shape) { %>
+                                                                <td><%=catalogServices[index].plans[planIndex].description%></td>
+                                                        <% }
+                                                        }
+                                                    }%>
+                                                    <% if (services[i].status=="In-Progress") { %>
+                                                       <td><img src="images/inprogress.png" height="30">&nbsp;&nbsp;In-Progress</td>
+                                                    <% } else if (services[i].status=="Running") { %>
+                                                       <td><img src="images/done.png" height="30">&nbsp;&nbsp;Running</td>
+                                                    <% } else { %>
+                                                       <td align="centre"><img src="images/erro.png" height="30">&nbsp;&nbsp;Error</td>
+                                                    <% } %>
                                                     <td><%= services[i].endpoint %></td>
                                                 </tr>
                                                 <% }
