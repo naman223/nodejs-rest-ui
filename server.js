@@ -55,7 +55,7 @@ It's page for error handling during Service Creation.
  */
 app.get('/error', function (request, response) {
     data.formsMessage = "Service with Same name already exists. Please try with different name."
-    response.render("create", {formsMessage: data.formsMessage});
+    response.render("create", {formsMessage: data.formsMessage, catalogServices: data.catalogServices});
 });
 
 /*
