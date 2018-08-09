@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var data = require('./data.js');
 var app = express();
+var globalRequest = require("request");
 app.use(express.static('views'));
 app.set('view engine', 'ejs');
 
@@ -149,6 +150,21 @@ app.post('/api/services/ui/create', function (request, response) {
             return;
         }
     }
+
+    globalRequest({
+            uri: "http://www.cjihrig.com/development/php/hello_form.php",
+            method: "POST",
+            forms: {
+                name: service.name
+            }
+        }, function(error, res, body) {
+            if (!error && res.statusCode == 200) {
+                console.log(body);
+            } else {
+                response.redirect("/error");
+                return;
+            }
+    });
     data.services.push(service);
     response.redirect("/created");
 });

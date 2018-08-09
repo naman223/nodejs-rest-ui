@@ -31,8 +31,8 @@
     <script>
         function confirmSubmit(msg,url) {
             var TCode = document.myform.name.value;
-            if (/[^a-zA-Z0-9\-\/]/.test(TCode)) {
-                alert('Input is not alphanumeric');
+            if (TCode.trim() =="" || /[^a-zA-Z0-9\-\/]/.test(TCode)) {
+                alert('Provide Service Name. Name should be alphanumeric.');
             } else {
                 var agree = confirm(msg);
                 if (agree) {
