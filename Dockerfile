@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm express install ejs request body-parser
+RUN npm install express ejs request body-parser
 # If you are building your code for production
 # RUN npm install --only=production
 
