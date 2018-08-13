@@ -154,7 +154,7 @@ app.post('/api/services/ui/create', function (request, response) {
     globalRequest({
             uri: "http://www.cjihrig.com/development/php/hello_form.php",
             method: "POST",
-            forms: {
+            form: {
                 name: service.name
             }
         }, function(error, res, body) {
